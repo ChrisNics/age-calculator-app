@@ -4,6 +4,7 @@ import Results from '@/components/Results';
 import { useForm, isNotEmpty } from '@mantine/form';
 import { useCallback } from 'react';
 import { useState, useEffect } from 'react';
+import Head from 'next/head';
 
 const dates = [
   { label: 'Day', placeholder: '24', minLength: '1', maxLength: '2' },
@@ -102,27 +103,33 @@ const Home = () => {
   }, [form.errors]);
 
   return (
-    <section className="bg-neutral-off-white">
-      <div className="container mx-auto flex min-h-screen items-center justify-center">
-        <div className="bg-neutral-white desktop:gap-y-5 flex w-full max-w-xl flex-col gap-y-10 rounded-2xl rounded-br-[55px] p-5">
-          <div className="desktop:text-2xl flex max-w-md gap-x-5">
-            {dates.map((date) => (
-              <Input
-                key={date.label}
-                label={date.label}
-                placeholder={date.placeholder}
-                error={form.errors[`${date.label.toLowerCase()}`]}
-                maxLength={date.maxLength}
-                minLength={date.minLength}
-                {...form.getInputProps(`${date.label.toLowerCase()}`)}
-              />
-            ))}
+    <>
+      <Head>
+        <title>Age Calculator App</title>
+        <link rel="shortcut icon" href="/favicon.png" />
+      </Head>
+      <section className="bg-neutral-off-white">
+        <div className="container mx-auto flex min-h-screen items-center justify-center">
+          <div className="bg-neutral-white desktop:gap-y-5 flex w-full max-w-xl flex-col gap-y-10 rounded-2xl rounded-br-[55px] p-5">
+            <div className="desktop:text-2xl flex max-w-md gap-x-5">
+              {dates.map((date) => (
+                <Input
+                  key={date.label}
+                  label={date.label}
+                  placeholder={date.placeholder}
+                  error={form.errors[`${date.label.toLowerCase()}`]}
+                  maxLength={date.maxLength}
+                  minLength={date.minLength}
+                  {...form.getInputProps(`${date.label.toLowerCase()}`)}
+                />
+              ))}
+            </div>
+            <Line handleSubmit={handleSubmit} />
+            <Results results={results} />
           </div>
-          <Line handleSubmit={handleSubmit} />
-          <Results results={results} />
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 
